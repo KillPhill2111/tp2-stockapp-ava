@@ -12,8 +12,11 @@ namespace StockApp.API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+
        
         private readonly IProductService _productService;
+=======
+
 
         public ProductsController(IProductRepository productRepository)
         {
