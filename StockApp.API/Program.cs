@@ -28,6 +28,7 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
         builder.Services.AddSingleton<IFinancialManagementService, FinancialManagementService>();
+        builder.Services.AddSingleton<ICompetitivenessAnalysisService, CompetitivenessAnalysisService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
