@@ -19,6 +19,11 @@ internal class Program
         builder.Services.AddInfrastructureAPI(builder.Configuration);
 
 
+        // Configura��o de servi�os
+        builder.Services.AddControllers();
+        builder.Services.AddSingleton<IContractManagementService, ContractManagementService>();
+=======
+
 
         //adicionar serviços de container de injeção de dependencias
         builder.Services.AddScoped<IAvaliacaoRepository, IAvaliacaoRepository>();
@@ -26,6 +31,7 @@ internal class Program
 
 
         // Configuração de serviços
+
 
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
