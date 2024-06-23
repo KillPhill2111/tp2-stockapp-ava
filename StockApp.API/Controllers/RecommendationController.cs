@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockApp.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using StockApp.Application.DTOs;
-using StockApp.Application.Interfaces;
 using StockApp.Application.Services;
 using StockApp.Domain.Entities;
 using StockApp.Domain.Interfaces;
