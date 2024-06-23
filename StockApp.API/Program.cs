@@ -16,6 +16,11 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
 
+        builder.Services.AddHttpClient<IPaymentIntegrationService, PaymentIntegrationService>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.payment.com/");
+        });
+
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
