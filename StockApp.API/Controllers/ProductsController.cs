@@ -69,11 +69,17 @@ namespace StockApp.API.Controllers
             }
             await _productRepository.Remove(id);
             return NoContent();
+        }
+        [HttpPut("bulk-update", Name ="BulkUpdateProducts")]
+        public async Task<IActionResult> BulkUpdate([FromBody] List<Product> products)
+        {
+            if (products==null)
+            {
+                return NotFound();
+            }
 
-
-
-
-
+            await _productRepository.BulkUpdateAsync(products);
+            return NoContent();
         }
     }
 }

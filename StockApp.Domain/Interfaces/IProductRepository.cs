@@ -34,5 +34,23 @@ namespace StockApp.Domain.Interfaces
         Task UpdateAsync(Product product);
 
         Task Remove(int id);
+        public async Task BulkUpdateAsync(List<Product> products)
+        {
+            if (products == null || !products.Any())
+                throw new ArgumentException("Product list cannot be null or empty", nameof(products));
+
+            foreach (var product in products)
+            {
+                var existingProduct = await _context.Products.FindAsync(product.Id);
+                if (existingProduct != null)
+                {
+                    existingProduct.Name = product.Name;
+                    existingProduct.Description = product.Description;
+                    existingProduct.Price = product.Price;
+                    existingProduct.Stock = product.Stock;
+                    existingProduct.Image = product.Image;
+                }
+            }
+        }
     }
 }
