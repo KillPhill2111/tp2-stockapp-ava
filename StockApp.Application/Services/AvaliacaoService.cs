@@ -1,4 +1,5 @@
 ﻿using StockApp.Application.Interfaces;
+using StockApp.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
