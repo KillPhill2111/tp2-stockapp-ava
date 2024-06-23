@@ -23,6 +23,7 @@ internal class Program
         builder.Services.AddInfrastructureAPI(builder.Configuration);
         builder.Services.AddSingleton<IProjectFeasibilityAnalysisService, ProjectFeasibilityAnalysisService>();
         builder.Services.AddSingleton<IProductionPlanningService, ProductionPlanningService>();
+        builder.Services.AddSingleton<IProcessAutomationService, ProcessAutomationService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
