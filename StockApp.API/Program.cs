@@ -49,6 +49,7 @@ internal class Program
         builder.Services.AddSingleton<ISupplierRelationshipManagementService, SupplierRelationshipManagementService>();
         builder.Services.AddSingleton<ISentimentAnalysisService, SentimentAnalysisService>();
         builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+        builder.Services.AddSingleton<IJustInTimeInventoryService, JustInTimeInventoryService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
