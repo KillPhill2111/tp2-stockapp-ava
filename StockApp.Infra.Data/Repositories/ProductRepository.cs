@@ -43,5 +43,10 @@ namespace StockApp.Infra.Data.Repositories
             await _productContext.SaveChangesAsync();
             return product;
         }
+
+        public Task Remove(int id )
+        {
+            throw new NotImplementedException();
+        }
     }
 }
