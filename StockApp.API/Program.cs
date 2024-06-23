@@ -22,6 +22,7 @@ internal class Program
         builder.Services.AddScoped<IRecommendationService, RecommendationService>();
         builder.Services.AddInfrastructureAPI(builder.Configuration);
         builder.Services.AddSingleton<IProjectFeasibilityAnalysisService, ProjectFeasibilityAnalysisService>();
+        builder.Services.AddSingleton<IProductionPlanningService, ProductionPlanningService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
