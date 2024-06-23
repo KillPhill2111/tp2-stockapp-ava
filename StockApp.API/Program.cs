@@ -27,6 +27,7 @@ internal class Program
         builder.Services.AddSingleton<IQualityMonitoringService, QualityMonitoringService>();
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
+        builder.Services.AddSingleton<IFinancialManagementService, FinancialManagementService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
