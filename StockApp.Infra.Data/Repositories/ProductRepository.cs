@@ -44,6 +44,9 @@ namespace StockApp.Infra.Data.Repositories
             return product;
         }
 
+
+        public Task Remove(int id )
+=======
         public async Task<IEnumerable<Product>> GetFilteredAsync(string name, decimal? minPrice, decimal? maxPrice)
         {
             var query = _productContext.Products.AsQueryable();
@@ -99,6 +102,7 @@ namespace StockApp.Infra.Data.Repositories
         }
 
         public IEnumerable<Product> GetAll()
+
         {
             throw new NotImplementedException();
         }

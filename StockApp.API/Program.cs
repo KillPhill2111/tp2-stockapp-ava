@@ -67,8 +67,12 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseHttpsRedirection();
+=======
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomerFeedbackManagementService, ICustomerFeedbackManagementService>();
+
 
 
         app.UseHttpsRedirection();
