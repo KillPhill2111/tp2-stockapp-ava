@@ -24,7 +24,7 @@ internal class Program
         builder.Services.AddSingleton<IProjectFeasibilityAnalysisService, ProjectFeasibilityAnalysisService>();
         builder.Services.AddSingleton<IProductionPlanningService, ProductionPlanningService>();
         builder.Services.AddSingleton<IProcessAutomationService, ProcessAutomationService>();
-
+        builder.Services.AddSingleton<IQualityMonitoringService, QualityMonitoringService>();
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
 
