@@ -1,6 +1,9 @@
 using StockApp.Application.Interfaces;
+
+=======
 using StockApp.Application.Services;
 using StockApp.Domain.Interfaces;
+
 using StockApp.Infra.IoC;
 using StockApp.Domain.Interfaces;
 using StockApp.Infra.Data.Repositories;
@@ -17,12 +20,12 @@ internal class Program
 
 
 
-        //adicionar serviços de container de injeção de dependencias
+        //adicionar serviÃ§os de container de injeÃ§Ã£o de dependencias
         builder.Services.AddScoped<IAvaliacaoRepository, IAvaliacaoRepository>();
         builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 
 
-        // Configuração de serviços
+        // ConfiguraÃ§Ã£o de serviÃ§os
 
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -51,6 +54,9 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        builder.Services.AddControllers();
+        builder.Services.AddSingleton<ICustomerFeedbackManagementService, ICustomerFeedbackManagementService>();
+
 
         app.UseHttpsRedirection();
 
