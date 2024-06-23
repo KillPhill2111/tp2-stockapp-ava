@@ -7,6 +7,7 @@ using StockApp.Domain.Interfaces;
 using StockApp.Infra.IoC;
 using StockApp.Domain.Interfaces;
 using StockApp.Infra.Data.Repositories;
+using FluentAssertions.Common;
 
 
 internal class Program
@@ -46,6 +47,8 @@ internal class Program
         builder.Services.AddSingleton<IFinancialManagementService, FinancialManagementService>();
         builder.Services.AddSingleton<ICompetitivenessAnalysisService, CompetitivenessAnalysisService>();
         builder.Services.AddSingleton<ISupplierRelationshipManagementService, SupplierRelationshipManagementService>();
+        builder.Services.AddSingleton<ISentimentAnalysisService, SentimentAnalysisService>();
+        builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
