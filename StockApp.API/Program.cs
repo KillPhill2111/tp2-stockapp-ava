@@ -15,7 +15,8 @@ internal class Program
         builder.Services.AddInfrastructureAPI(builder.Configuration);
 
         // Configuração de serviços
-
+        builder.Services.AddControllers();
+        builder.Services.AddSingleton<IContractManagementService, ContractManagementService>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         builder.Services.AddScoped<IRecommendationService, RecommendationService>();
