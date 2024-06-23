@@ -9,14 +9,15 @@ namespace StockApp.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> GetAll();
+        IEnumerable<Product> All { get; }
+
         Product GetById(int id);
         Product Create(Product product);
 
         Task<IEnumerable<Product>> GetProducts();
 
         Task<Product> GetById(int? id);
-        Task<Product> Create(Product product);
+        Task<Product> Createe(Product product);
         Task<Product> Update(Product product);
         Task<Product> Remove(Product product);
 
@@ -33,6 +34,10 @@ namespace StockApp.Domain.Interfaces
         IEnumerable<Product> GetAll();
         Task UpdateAsync(Product product);
 
+
         Task Remove(int id);
+=======
+       
+
     }
 }

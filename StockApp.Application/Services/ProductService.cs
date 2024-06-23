@@ -25,7 +25,7 @@ namespace StockApp.Application.Services
         //pegar todos os produtos:
         public IEnumerable<Product> GetAll()
         {
-            return _productRepository.GetAll();
+            return _productRepository.All;
         }
         //pegar todos os produtos por id:
         public Product GetById(int id)
@@ -38,7 +38,7 @@ namespace StockApp.Application.Services
         public async Task Add(ProductDTO productDto)
         {
             var productEntity = _mapper.Map<Product>(productDto);
-            await _productRepository.Create(productEntity);
+            await _productRepository.Createe(productEntity);
         }
 
         public async Task<IEnumerable<ProductDTO>> GetProducts()
@@ -84,5 +84,7 @@ namespace StockApp.Application.Services
         {
             _productRepository.Update(product);
         }
+
+        
     }
 }

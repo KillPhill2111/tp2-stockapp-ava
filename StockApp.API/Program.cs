@@ -1,7 +1,13 @@
 using StockApp.Application.Interfaces;
+
+=======
 using StockApp.Application.Services;
 using StockApp.Domain.Interfaces;
+
 using StockApp.Infra.IoC;
+using StockApp.Domain.Interfaces;
+using StockApp.Infra.Data.Repositories;
+
 
 internal class Program
 {
@@ -14,15 +20,29 @@ internal class Program
 
 
 
-        //adicionar serviços de container de injeção de dependencias
+        //adicionar serviÃ§os de container de injeÃ§Ã£o de dependencias
         builder.Services.AddScoped<IAvaliacaoRepository, IAvaliacaoRepository>();
         builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
 
 
-        // Configuração de serviços
+        // ConfiguraÃ§Ã£o de serviÃ§os
+
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
+        builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+        builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+        builder.Services.AddInfrastructureAPI(builder.Configuration);
+
+
+        builder.Services.AddControllers();
+        builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
 
         builder.Services.AddControllers();
         builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
+
+        builder.Services.AddHttpClient<IPaymentIntegrationService, PaymentIntegrationService>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.payment.com/");
+        });
 
 
         builder.Services.AddEndpointsApiExplorer();
@@ -36,6 +56,9 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+        builder.Services.AddControllers();
+        builder.Services.AddSingleton<ICustomerFeedbackManagementService, ICustomerFeedbackManagementService>();
+
 
         app.UseHttpsRedirection();
 
