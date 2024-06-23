@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockApp.Application.DTOs;
+
+=======
+using StockApp.Application.Interfaces;
+using StockApp.Application.Services;
+
 using StockApp.Domain.Entities;
 using StockApp.Domain.Interfaces;
-
+using System;
 namespace StockApp.API.Controllers
 {
     [ApiController]
@@ -11,19 +16,22 @@ namespace StockApp.API.Controllers
     {
         
         private readonly IProductRepository _productRepository;
-        
+
+       
+        private readonly IProductService _productService;
+=======
+
 
         public ProductsController(IProductRepository productRepository)
         {
             _productRepository = productRepository;
 
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
-        {
-            var products = await _productRepository.GetAllAsync();
-            return Ok(products);
-        }
+       
+     
+
+
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetById(int id)
@@ -43,12 +51,10 @@ namespace StockApp.API.Controllers
             return Ok(products);
         }
 
+=======
+
         [HttpPost]
-        public async Task<ActionResult<Product>> Create(Product product)
-        {
-            await _productRepository.AddAsync(product);
-            return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
-        }
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Product product)
         {
