@@ -44,7 +44,65 @@ namespace StockApp.Infra.Data.Repositories
             return product;
         }
 
+
         public Task Remove(int id )
+=======
+        public async Task<IEnumerable<Product>> GetFilteredAsync(string name, decimal? minPrice, decimal? maxPrice)
+        {
+            var query = _productContext.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query = query.Where(p => p.Name.Contains(name));
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            return await query.ToListAsync();
+        }
+
+        public IEnumerable<Product> All => throw new NotImplementedException();
+
+        public Product GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Product IProductRepository.Create(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddAsync(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Product> GetAll()
+
         {
             throw new NotImplementedException();
         }
