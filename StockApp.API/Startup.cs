@@ -50,9 +50,6 @@ namespace StockApp.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-
-
-
                 // Configuração do CORS
                 services.AddCors(options =>
                 {
@@ -62,11 +59,45 @@ namespace StockApp.API
                             builder.AllowAnyOrigin()
                                    .AllowAnyMethod()
                                    .AllowAnyHeader();
-                        });
+                        }
+                    );
                 });
 
             }
-            
+            //Configura serviços de middleware
+             public void ConfigureServices(IServiceCollection services)
+            {
+                services.AddControllers();
+
+                // Configurar Rate Limiting
+                services.AddMemoryCache();
+                services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
+                services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+                services.AddInMemoryRateLimiting();
+            }
+
+            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+            {
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+
+                app.UseHttpsRedirection();
+
+                app.UseRouting();
+
+                app.UseAuthorization();
+
+                // Configurar Rate Limiting Middleware
+                app.UseIpRateLimiting();
+
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                });
+            }
+
         }
     }
 }

@@ -79,6 +79,12 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+
+        app.UseIpRateLimiting();
+
+        app.MapControllers();
+=======
 app.MapControllers();
+
 
 app.Run();
