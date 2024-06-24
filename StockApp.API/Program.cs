@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using StockApp.Application.Interfaces;
 
 
@@ -5,6 +7,9 @@ using StockApp.Application.Services;
 using StockApp.Domain.Interfaces;
 
 using StockApp.Infra.IoC;
+
+using System.Text;
+=======
 using StockApp.Domain.Interfaces;
 using StockApp.Infra.Data.Repositories;
 using FluentAssertions.Common;
@@ -19,6 +24,7 @@ builder.Services.AddInfrastructureAPI(builder.Configuration);
 // Configura��o de servi�os
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IContractManagementService, ContractManagementService>();
+
 
 
 
@@ -81,6 +87,30 @@ app.UseAuthorization();
 
 
         app.UseIpRateLimiting();
+
+        //configura a autentica��o do jwt
+        var key = Encoding.ASCII.GetBytes("UmaChaveSuperSecreta");
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = "NossaIssue",
+                ValidAudience="NossaAudiencia",
+                IssuerSigningKey= new SymmetricSecurityKey(key)
+            };
+        });
+
 
         app.MapControllers();
 =======

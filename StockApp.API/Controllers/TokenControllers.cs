@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using StockApp.API.Models;
+using StockApp.Application.Interfaces;
+using StockApp.Domain.Account;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,8 +16,28 @@ namespace StockApp.API.Controllers
     {
         private readonly IAuthenticate _authentication;
         private readonly IConfiguration _configuration;
+        private readonly IJwtAuthManager _jwtAuthManager;
 
-        public TokenController(IAuthenticate authentication, IConfiguration configuration)
+        public TokenControllers(IJwtAuthManager jwtAuthManager)
+        {
+            _jwtAuthManager= jwtAuthManager;
+        }
+        [HttpPost]
+        [Route("authenticate")]
+        public IActionResult Authenticate([FromBody] UserLogin userLogin)
+        {
+            // Aqui você pode adicionar lógica para validar o usuário. Exemplo básico:
+            if (userLogin.Username == "test" && userLogin.Password == "password")
+            {
+                var token = _jwtAuthManager.GenerateToken(userLogin.Username);
+                return Ok(new { Token = token });
+            }
+
+            return Unauthorized();
+        }
+
+
+        public TokenControllers(IAuthenticate authentication, IConfiguration configuration)
         {
             _authentication = authentication ??
                 throw new ArgumentNullException(nameof(authentication));
