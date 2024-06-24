@@ -1,52 +1,94 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using StockApp.Application.Interfaces;
+
+
 using StockApp.Application.Services;
 using StockApp.Domain.Interfaces;
+
 using StockApp.Infra.IoC;
+
 using System.Text;
+=======
+using StockApp.Domain.Interfaces;
+using StockApp.Infra.Data.Repositories;
+using FluentAssertions.Common;
 
-internal class Program
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddInfrastructureAPI(builder.Configuration);
+
+
+// Configuraï¿½ï¿½o de serviï¿½os
+builder.Services.AddControllers();
+builder.Services.AddSingleton<IContractManagementService, ContractManagementService>();
+
+
+
+
+//adicionar serviÃ§os de container de injeÃ§Ã£o de dependencias
+builder.Services.AddScoped<IAvaliacaoRepository, IAvaliacaoRepository>();
+
+
+
+// ConfiguraÃ§Ã£o de serviÃ§os
+
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+builder.Services.AddInfrastructureAPI(builder.Configuration);
+builder.Services.AddSingleton<IProjectFeasibilityAnalysisService, ProjectFeasibilityAnalysisService>();
+builder.Services.AddSingleton<IProductionPlanningService, ProductionPlanningService>();
+builder.Services.AddSingleton<IProcessAutomationService, ProcessAutomationService>();
+builder.Services.AddSingleton<IQualityMonitoringService, QualityMonitoringService>();
+builder.Services.AddControllers();
+builder.Services.AddSingleton<ICustomerRelationshipManagementService, CustomerRelationshipManagementService>();
+builder.Services.AddSingleton<IFinancialManagementService, FinancialManagementService>();
+builder.Services.AddSingleton<ICompetitivenessAnalysisService, CompetitivenessAnalysisService>();
+builder.Services.AddSingleton<ISupplierRelationshipManagementService, SupplierRelationshipManagementService>();
+builder.Services.AddSingleton<ISentimentAnalysisService, SentimentAnalysisService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+builder.Services.AddSingleton<IJustInTimeInventoryService, JustInTimeInventoryService>();
+
+builder.Services.AddControllers();
+builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
+
+builder.Services.AddHttpClient<IPaymentIntegrationService, PaymentIntegrationService>(client =>
 {
-    private static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-        builder.Services.AddInfrastructureAPI(builder.Configuration);
+    client.BaseAddress = new Uri("https://api.payment.com/");
+});
 
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-        //adicionar serviços de container de injeção de dependencias
-        builder.Services.AddScoped<IAvaliacaoRepository, IAvaliacaoRepository>();
-        builder.Services.AddScoped<IAvaliacaoService, AvaliacaoService>();
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+builder.Services.AddControllers();
+builder.Services.AddSingleton<ICustomerFeedbackManagementService, ICustomerFeedbackManagementService>();
 
 
-        // Configuração de serviços
 
-        builder.Services.AddControllers();
-        builder.Services.AddSingleton<ICustomReportService, CustomReportService>();
+app.UseHttpsRedirection();
 
+app.UseAuthorization();
 
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-        app.UseHttpsRedirection();
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
 
         app.UseIpRateLimiting();
 
-        //configura a autenticação do jwt
+        //configura a autenticaï¿½ï¿½o do jwt
         var key = Encoding.ASCII.GetBytes("UmaChaveSuperSecreta");
         builder.Services.AddAuthentication(options =>
         {
@@ -71,7 +113,8 @@ internal class Program
 
 
         app.MapControllers();
+=======
+app.MapControllers();
 
-        app.Run();
-    }
-}
+
+app.Run();

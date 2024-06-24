@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockApp.Application.DTOs;
+
+
+using StockApp.Application.Interfaces;
+using StockApp.Application.Services;
+
 using StockApp.Domain.Entities;
 using StockApp.Domain.Interfaces;
-
+using System;
 namespace StockApp.API.Controllers
 {
     [ApiController]
@@ -11,6 +16,10 @@ namespace StockApp.API.Controllers
     {
         
         private readonly IProductRepository _productRepository;
+
+        private readonly IReviewService _reviewService;
+        private readonly IReviewRepository _reviewRepository;
+        private readonly IProductService _productService;
         
 
         public ProductsController(IProductRepository productRepository)
@@ -18,12 +27,35 @@ namespace StockApp.API.Controllers
             _productRepository = productRepository;
 
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+       
+     
+
+         [HttpPost("{productId}/review")]
+        public async Task<IActionResult> AddReview(int productId, [FromBody] Review review)
         {
-            var products = await _productRepository.GetAllAsync();
-            return Ok(products);
+            try
+            {
+                if (review.Rating < 1 || review.Rating > 5)
+                {
+                    return BadRequest("A nota deve estar entre 1 e 5.");
+                }
+
+                review.ProductId = productId;
+                review.Date = DateTime.Now;
+
+                await _reviewRepository.AddAsync(review);
+
+                return Ok(review);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erro ao adicionar avaliação: " + ex.Message);
+            }
+
         }
+
+
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetById(int id)
@@ -43,12 +75,10 @@ namespace StockApp.API.Controllers
             return Ok(products);
         }
 
+
+
         [HttpPost]
-        public async Task<ActionResult<Product>> Create(Product product)
-        {
-            await _productRepository.AddAsync(product);
-            return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
-        }
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Product product)
         {
