@@ -41,6 +41,8 @@ internal class Program
 
         app.UseAuthorization();
 
+        app.UseIpRateLimiting();
+
         app.MapControllers();
 
         app.Run();
